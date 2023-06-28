@@ -23,5 +23,5 @@ Route::get('/about', static function () {
     return "This is geekbrains web developer study project";
 });
 Route::get('/news/{id}', static function (string $id) {
-    return "News with id $id were not found";
+    return "News with id $id weren't found";
 });
