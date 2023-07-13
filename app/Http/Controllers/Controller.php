@@ -10,6 +10,33 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
+    public function getCategory(int $id = null): array{
+
+        if($id != null)
+        {
+            return [
+                'id' => $id,
+                'name' => fake() -> jobTitle(),
+                'description' => fake()->text(50),
+                'created_at' => now()->format('d-m-Y H:i')
+            ];
+        }
+
+        $categoriesCount = 5;
+        $categories = [];
+
+        for($i=0; $i < $categoriesCount; $i++)
+        {
+            $categories[] = [
+                'id' => ($i===0) ? ++$i : $i,
+                'name' => fake() -> jobTitle(),
+                'description' => fake()->text(50),
+                'created_at' => now()->format('d-m-Y H:i')
+            ];
+        }
+        return $categories;
+    }
+
     public function getNews(int $id = null): array
     {
         if($id != null)
