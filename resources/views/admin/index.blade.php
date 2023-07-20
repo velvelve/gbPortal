@@ -5,7 +5,7 @@
         <div class="btn-toolbar mb-2 mb-md-0">
         </div>
     </div>
-
+    @include('inc.message')
     <x-alert :type="request()->get('type', 'light')" message="это просто уведомление"></x-alert>
     <x-alert type="danger" message="это просто уведомление"></x-alert>
     <x-alert type="warning" message="это просто уведомление"></x-alert>
