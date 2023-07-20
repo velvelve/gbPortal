@@ -1,4 +1,3 @@
-<h2>News Categories</h2>
 <?php foreach($categories as $category): ?>
     <div>
         <h4><a href="<?=route('category.show', ['id' => $category['id']])?>"><?=$category['name']?></a></h4>

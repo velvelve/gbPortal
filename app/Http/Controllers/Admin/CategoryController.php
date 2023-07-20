@@ -12,7 +12,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return "Categories index";
+        return \view('admin.categories.index', [
+            'categories' => $this->getCategory(),
+        ]);
     }
 
     /**

@@ -13,8 +13,11 @@ class NewsController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+
     {
-        return "News admin index list";
+        return view('admin.news.index', [
+            'newsList' => $this->getNews(),
+        ]);
     }
 
     /**
@@ -22,7 +25,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return "News create form";
+        return \view('admin.news.create');
     }
 
     /**

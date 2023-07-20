@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HelloController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,15 +36,16 @@ Route::get('/hello', [HelloController::class, 'index']) -> name('hello.index');
 
 //Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function (){
+    Route::get('/', AdminIndexController::class) ->name('index');
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
 });
 
 //Categories
-Route::get('/categories', [CategoryController::class, 'index']) -> name('category.index');
+Route::get('/categories', [CategoryController::class, 'index']) -> name('categories.index');
 Route::get('/categories/{id}', [CategoryController::class, 'show']) 
 -> where('id', '\d+')
--> name('category.show');
+-> name('categories.show');
 
 //News
 Route::get('/news', [NewsController::class, 'index']) -> name('news.index');

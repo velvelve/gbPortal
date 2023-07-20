@@ -10,13 +10,13 @@ class CategoryController extends Controller
 {
     public function index()
    {
-      return \view('category.index', [
+      return \view('categories.index', [
          'categories' => $this->getCategory(),
       ]);
    }
 
    public function show(int $id){
-    return \view('category.show', [
+    return \view('categories.show', [
        'category' => $this->getCategory($id),
     ]);
  }

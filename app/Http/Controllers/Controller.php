@@ -47,7 +47,7 @@ class Controller extends BaseController
                 'author' => fake() -> userName(),
                 'image' => fake() -> imageUrl(),
                 'status' => 'ACTIVE',
-                'description' => fake()->text(100),
+                'description' => "<strong>" . fake()->text(100) . "</strong>",
                 'created_at' => now()->format('d-m-Y H:i')
             ];
         }
@@ -63,7 +63,7 @@ class Controller extends BaseController
                 'author' => fake() -> userName(),
                 'image' => fake() -> imageUrl(200, 150),
                 'status' => 'ACTIVE',
-                'description' => fake()->text(100),
+                'description' => "<strong>" . fake()->text(100) . "</strong>",
                 'created_at' => now()->format('d-m-Y H:i')
             ];
         }
