@@ -33,7 +33,10 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+        ]);
+        dd($request->only(['title', 'description']));
     }
 
     /**
@@ -41,7 +44,7 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
-        //
+       
     }
 
     /**
