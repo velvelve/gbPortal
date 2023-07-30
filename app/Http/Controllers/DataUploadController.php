@@ -1,13 +1,10 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Http\Controllers;
 
-namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class DataUploadController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +12,6 @@ class NewsController extends Controller
     public function index()
 
     {
-        return view('admin.news.index', [
-            'newsList' => $this->getNews(),
-        ]);
     }
 
     /**
@@ -25,7 +19,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return \view('admin.news.create');
+        return \view('dataupload.create');
     }
 
     /**
@@ -34,9 +28,8 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required',
+            'name'=>'required',
         ]);
-
         return response()->json($request->all());
     }
 
@@ -45,7 +38,6 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
-       return response()->json($this->getNews(), 200);
     }
 
     /**
