@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HelloController;
+use App\Http\Controllers\DataUploadController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
@@ -53,3 +54,6 @@ Route::get('/news', [NewsController::class, 'index']) -> name('news.index');
 Route::get('/news/{id}', [NewsController::class, 'show']) 
 -> where('id', '\d+')
 -> name('news.show');
+
+//DataUpload
+Route::resource('/dataupload', DataUploadController::class);
