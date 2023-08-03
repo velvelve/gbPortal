@@ -17,7 +17,7 @@ class CategorySeeder extends Seeder
 
     public function getData(): array
     {
-        $categoriesCount = 10;
+        $categoriesCount = 5;
         $categories = [];
 
         for ($i = 0; $i < $categoriesCount; $i++) {

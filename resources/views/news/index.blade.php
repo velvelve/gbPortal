@@ -6,17 +6,17 @@
         @forelse ($newsList as $news)
             <div class="col">
                 <div class="card shadow-sm">
-                    <h4><a href="{{ route('news.show', ['id' => $news['id']]) }}">{{ $news['title'] }}</a></h4>
-                    <img src="{{ $news['image'] }}" />
+                    <h4><a href="{{ route('news.show', ['id' => $news->id]) }}">{{ $news->title }}</a></h4>
+                    <img src="{{ $news->image }}" />
                     <div class="card-body">
-                        <p class="card-text">{!! $news['description'] !!}</p>
+                        <p class="card-text">{!! $news->description !!}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a href="<{{ route('news.show', ['id' => $news['id']]) }}"
+                                <a href="<{{ route('news.show', ['id' => $news->id]) }}"
                                     class="btn btn-sm btn-outline-secondary">Открыть</a>
                             </div>
-                            <small class="text-muted"><em>{{ $news['author'] }}</em> &nbsp;
-                                ({{ $news['created_at'] }})
+                            <small class="text-muted"><em>{{ $news->author }}</em> &nbsp;
+                                ({{ $news->created_at }})
                             </small>
                         </div>
                     </div>

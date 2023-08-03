@@ -18,19 +18,23 @@ class NewsSeeder extends Seeder
 
     public function getData(): array
     {
+        $quantityCategories = 6;
         $quantityNews = 10;
         $news = [];
 
-        for ($i = 0; $i < $quantityNews; $i++) {
-            $news[] = [
-                'category_id' => 1,
-                'title' => fake()->jobTitle(),
-                'author' => fake()->userName(),
-                'image' => fake()->imageUrl(200, 150),
-                'status' => Status::ACTIVE->value,
-                'description' => fake()->text(100),
-                'created_at' => now(),
-            ];
+        for ($j = 1; $j < $quantityCategories; $j++) {
+            for ($i = 0; $i < $quantityNews; $i++) {
+                $news[] = [
+                    'category_id' => $j,
+                    'title' => fake()->jobTitle(),
+                    'author' => fake()->userName(),
+                    'image' => fake()->imageUrl(200, 150),
+                    'status' => Status::ACTIVE->value,
+                    'description' => fake()->text(100),
+                    'created_at' => now(),
+                    'source_id' => $i + 1,
+                ];
+            }
         }
 
         return $news;
