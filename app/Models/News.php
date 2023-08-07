@@ -13,15 +13,4 @@ class News extends Model
     use HasFactory;
 
     protected $table = 'news';
-
-
-    public function getAll()
-    {
-        return DB::table($this->table)->get();
-    }
-
-    public function getItemById(int $id)
-    {
-        return DB::table($this->table)->find($id);
-    }
 }

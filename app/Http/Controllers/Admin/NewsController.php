@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = app(News::class);
-
         return view('admin.news.index', [
-            'newsList' => $news->getAll(),
+            'newsList' => News::all(),
         ]);
     }
 
@@ -27,7 +26,10 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return \view('admin.news.create');
+        $categories = Category::all();
+        return \view('admin.news.create', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
