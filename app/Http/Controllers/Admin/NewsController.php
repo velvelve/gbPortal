@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\News;
+use App\Models\Source;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -27,8 +28,10 @@ class NewsController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $sources = Source::all();
         return \view('admin.news.create', [
             'categories' => $categories,
+            'sources' => $sources,
         ]);
     }
 
@@ -41,7 +44,12 @@ class NewsController extends Controller
             'title' => 'required',
         ]);
 
-        return response()->json($request->all());
+        $data = $request->only(['category_id', 'title', 'author', 'status', 'description', 'source_id']);
+        $news = new News($data);
+        if ($news->save()) {
+            return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');
+        }
+        return back()->with('error', 'Не удалось добавить запись');
     }
 
     /**
@@ -55,17 +63,32 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(News $news)
     {
-        //
+        $categories = Category::all();
+        $sources = Source::all();
+        return \view('admin.news.edit', [
+            'news' => $news,
+            'categories' => $categories,
+            'sources' => $sources,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, News $news)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        $data = $request->only(['category_id', 'title', 'author', 'status', 'description', 'source_id']);
+        $news = $news->fill($data);
+        if ($news->save()) {
+            return redirect()->route('admin.news.index')->with('success', 'Запись успешно обновлена');
+        }
+        return back()->with('error', 'Не удалось обновить запись');
     }
 
     /**

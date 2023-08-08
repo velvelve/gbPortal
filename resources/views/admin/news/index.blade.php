@@ -9,6 +9,7 @@
         </div>
     </div>
     <div class="table-responsive">
+        @include('inc.message')
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
@@ -28,7 +29,8 @@
                         <td>{{ $news->author }}</td>
                         <td>{{ $news->status }}</td>
                         <td>{{ $news->created_at }}</td>
-                        <td><a href="">Edit</a> &nbsp; <a href="">Delete</a></td>
+                        <td><a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp; <a
+                                href="">Delete</a></td>
                     </tr>
                 @empty
                     <tr>
