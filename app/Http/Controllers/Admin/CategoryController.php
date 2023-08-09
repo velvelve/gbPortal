@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         return \view('admin.categories.index', [
-            'categories' => $this->getCategory(),
+            'categories' => Category::all(),
         ]);
     }
 
@@ -22,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return \view('admin.categories.create');
     }
 
     /**
@@ -30,7 +31,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        $data = $request->only(['title', 'description']);
+        $category = new Category($data);
+        if ($category->save()) {
+            return redirect()->route('admin.categories.index')->with('success', 'Запись успешно сохранена');
+        }
+        return back()->with('error', 'Не удалось добавить запись');
     }
 
     /**
@@ -44,17 +54,28 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        return \view('admin.categories.edit', [
+            'category' => $category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        $data = $request->only(['title', 'description']);
+        $category = $category->fill($data);
+        if ($category->save()) {
+            return redirect()->route('admin.categories.index')->with('success', 'Запись успешно обновлена');
+        }
+        return back()->with('error', 'Не удалось обновить запись');
     }
 
     /**

@@ -10,23 +10,24 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-   public function index()
+   public function index(Request $request)
    {
-      $news = app(News::class);
+      if ($request->has('category_id')) {
+         $category_id = $request->query('category_id', 1);
+         $news = News::query()->where('category_id', $category_id)->get();
+      } else {
+         $news = News::all();
+      }
       return \view('news.index', [
-         'newsList' => $news->getAll(),
+         'newsList' => $news,
       ]);
    }
 
    public function show(int $id)
    {
-      $news = app(News::class);
-      $newsItem = $news->getItemById($id);
-      $sources = app(Source::class);
-      $source = $sources->getItemById($newsItem->source_id);
+      $newsItem = News::find($id);
       return \view('news.show', [
          'news' => $newsItem,
-         'source' => $source,
       ]);
    }
 }

@@ -5,22 +5,20 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
    public function index()
    {
-      $categories = app(Category::class);
+      $categories = Category::all();
       return \view('categories.index', [
-         'categories' => $categories->getAll(),
+         'categories' => $categories,
       ]);
    }
 
    public function show(int $id)
    {
-      $categories = app(Category::class);
-      $category = $categories->getItemById($id);
+      $category = Category::find($id);
       return \view('categories.show', [
          'category' => $category,
       ]);

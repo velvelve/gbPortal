@@ -6,7 +6,7 @@
         <img src="<?= $news->image ?>" />
         <p><em><?= $news->author ?></em> &nbsp; (<?= $news->created_at ?>)</p>
         <p><?= $news->description ?></p>
-        <p>Источник: {{ $source->name }}</p>
+        <p>Источник: {{ $news->source->name }}</p>
     </div>
     <hr /><br>
 @endsection

@@ -14,6 +14,12 @@ class Category extends Model
 
     protected $table = 'categories';
 
+    protected $fillable = [
+        'id',
+        'title',
+        'description',
+    ];
+
 
     public function news()
     {
