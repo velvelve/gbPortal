@@ -10,10 +10,22 @@
     </div>
     <div class="table-responsive">
         @include('inc.message')
+        <select id="filter">
+            <option @if ($status === 'all') selected @endif value="all">Все
+            </option>
+            <option @if ($status === \App\Enums\News\Status::DRAFT->value) selected @endif>{{ \App\Enums\News\Status::DRAFT->value }}
+            </option>
+            <option @if ($status === \App\Enums\News\Status::ACTIVE->value) selected @endif>{{ \App\Enums\News\Status::ACTIVE->value }}
+            </option>
+            <option @if ($status === \App\Enums\News\Status::BLOCKED->value) selected @endif>{{ \App\Enums\News\Status::BLOCKED->value }}
+            </option>
+        </select>&nbsp; <button class="btm small filter_btn">Ок</button>
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Категория</th>
+                    <th scope="col">Источник</th>
                     <th scope="col">Заголовок</th>
                     <th scope="col">Автор</th>
                     <th scope="col">Статус</th>
@@ -25,6 +37,8 @@
                 @forelse ($newsList as $news)
                     <tr>
                         <td>{{ $news->id }}</td>
+                        <td>{{ $news->category->title }}</td>
+                        <td>{{ $news->source->name }}</td>
                         <td>{{ $news->title }}</td>
                         <td>{{ $news->author }}</td>
                         <td>{{ $news->status }}</td>
@@ -39,5 +53,17 @@
                 @endforelse
             </tbody>
         </table>
+        {{ $newsList->links() }}
     </div>
 @endsection
+@push('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let btn = document.querySelector(".filter_btn");
+            btn.addEventListener('click', () => {
+                let filter = document.getElementById("filter").value;
+                location.href = "?f=" + filter;
+            });
+        });
+    </script>
+@endpush

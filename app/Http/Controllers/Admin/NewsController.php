@@ -15,10 +15,16 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $newsList = News::query()->status()->with('category')->with('source')->paginate(15);
+        $statusSelected = "none";
+        if ($request->has('f')) {
+            $statusSelected = $request->query('f', 'all');
+        }
         return view('admin.news.index', [
-            'newsList' => News::all(),
+            'newsList' => $newsList,
+            'status' => $statusSelected,
         ]);
     }
 

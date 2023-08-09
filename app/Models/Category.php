@@ -15,13 +15,8 @@ class Category extends Model
     protected $table = 'categories';
 
 
-    public function getAll()
+    public function news()
     {
-        return DB::table($this->table)->get();
-    }
-
-    public function getItemById(int $id)
-    {
-        return DB::table($this->table)->find($id);
+        return $this->hasMany(News::class, 'category_id');
     }
 }

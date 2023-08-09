@@ -16,4 +16,9 @@ class Source extends Model
     {
         return DB::table($this->table)->find($id);
     }
+
+    public function news()
+    {
+        return $this->hasMany(News::class, 'source_id');
+    }
 }

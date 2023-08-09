@@ -33,27 +33,32 @@ Route::get('/news/{id}', static function (string $id) {
 });
 
 //Hello
-Route::get('/hello', [HelloController::class, 'index']) -> name('hello.index');
+Route::get('/hello', [HelloController::class, 'index'])->name('hello.index');
 
 //Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function (){
-    Route::get('/', AdminIndexController::class) ->name('index');
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function () {
+    Route::get('/', AdminIndexController::class)->name('index');
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
 });
 
 //Categories
-Route::get('/categories', [CategoryController::class, 'index']) -> name('categories.index');
-Route::get('/categories/{id}', [CategoryController::class, 'show']) 
--> where('id', '\d+')
--> name('categories.show');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/{id}', [CategoryController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('categories.show');
 
 //News
-Route::get('/news', [NewsController::class, 'index']) -> name('news.index');
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 
-Route::get('/news/{id}', [NewsController::class, 'show']) 
--> where('id', '\d+')
--> name('news.show');
+Route::get('/news/{id}', [NewsController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('news.show');
 
 //DataUpload
 Route::resource('/dataupload', DataUploadController::class);
+
+Route::get('/collection', function () {
+    $array = [1, 2, 3, 4, 5, 55, 56, 877];
+    $collection = collect($array);
+});
