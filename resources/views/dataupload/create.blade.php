@@ -17,7 +17,7 @@
             @csrf
             <div class="form-group">
                 <label for="name">Имя Заказчика</label>
-                <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+                <input type="text" class="form-control" name="customer" id="customer" value="{{ old('customer') }}">
             </div>
             <div class="form-group">
                 <label for="phone">Номер телефона</label>

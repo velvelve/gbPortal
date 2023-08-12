@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class News extends Model
 {
@@ -14,14 +14,32 @@ class News extends Model
 
     protected $table = 'news';
 
+    protected $fillable = [
+        'category_id',
+        'title',
+        'author',
+        'status',
+        'image',
+        'description',
+        'source_id'
+    ];
 
-    public function getAll()
+    public function scopeStatus(Builder $query)
     {
-        return DB::table($this->table)->get();
+        $param = request()->query('f', 'all');
+        if ($param === 'all') {
+            return  $query;
+        }
+        return $query->where('status', $param);
     }
 
-    public function getItemById(int $id)
+    public function category()
     {
-        return DB::table($this->table)->find($id);
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function source()
+    {
+        return $this->belongsTo(Source::class, 'source_id');
     }
 }

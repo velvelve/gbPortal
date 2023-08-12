@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataUpload;
 use Illuminate\Http\Request;
 
 class DataUploadController extends Controller
@@ -10,8 +11,10 @@ class DataUploadController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-
     {
+        return \view('dataupload.index', [
+            'orders' => DataUpload::all()
+        ]);
     }
 
     /**
@@ -27,11 +30,18 @@ class DataUploadController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
-            'name'=>'required',
+            'customer' => 'required',
+            'phone' => 'required',
+            'email' => 'required'
         ]);
-        return response()->json($request->all());
+        $data = $request->only(['customer', 'phone', 'email', 'info']);
+        $order = new DataUpload($data);
+        if ($order->save()) {
+            return redirect()->route('dataupload.index')->with('success', 'Запись успешно сохранена');
+        }
+        return back()->with('error', 'Не удалось добавить запись');
     }
 
     /**

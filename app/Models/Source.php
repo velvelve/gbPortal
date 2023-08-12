@@ -12,8 +12,12 @@ class Source extends Model
 
     protected $table = 'sources';
 
-    public function getItemById(int $id)
+    protected $fillable = [
+        'name',
+    ];
+
+    public function news()
     {
-        return DB::table($this->table)->find($id);
+        return $this->hasMany(News::class, 'source_id');
     }
 }
