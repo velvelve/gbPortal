@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\News\Status;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\News\Create;
+use App\Http\Requests\Admin\News\Edit;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Enum;
 
 class NewsController extends Controller
 {
@@ -44,18 +48,13 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Create $request)
     {
-        $request->validate([
-            'title' => 'required',
-        ]);
-
-        $data = $request->only(['category_id', 'title', 'author', 'status', 'description', 'source_id']);
-        $news = new News($data);
+        $news = new News($request->validated());
         if ($news->save()) {
-            return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');
+            return redirect()->route('admin.news.index')->with('success', __('News was saved successfully'));
         }
-        return back()->with('error', 'Не удалось добавить запись');
+        return back()->with('error', __('We can not save item, please try again'));
     }
 
     /**
@@ -83,18 +82,13 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, News $news)
+    public function update(Edit $request, News $news)
     {
-        $request->validate([
-            'title' => 'required',
-        ]);
-
-        $data = $request->only(['category_id', 'title', 'author', 'status', 'description', 'source_id']);
-        $news = $news->fill($data);
+        $news = $news->fill($request->validated());
         if ($news->save()) {
-            return redirect()->route('admin.news.index')->with('success', 'Запись успешно обновлена');
+            return redirect()->route('admin.news.index')->with('success', __('News was saved successfully'));
         }
-        return back()->with('error', 'Не удалось обновить запись');
+        return back()->with('error', __('We can not save item, please try again'));
     }
 
     /**
