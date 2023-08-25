@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DataUpload\Create;
 use App\Models\DataUpload;
 use Illuminate\Http\Request;
 
@@ -28,16 +29,9 @@ class DataUploadController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Create $request)
     {
-
-        $request->validate([
-            'customer' => 'required',
-            'phone' => 'required',
-            'email' => 'required'
-        ]);
-        $data = $request->only(['customer', 'phone', 'email', 'info']);
-        $order = new DataUpload($data);
+        $order = new DataUpload($request->validated());
         if ($order->save()) {
             return redirect()->route('dataupload.index')->with('success', 'Запись успешно сохранена');
         }

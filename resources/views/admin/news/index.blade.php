@@ -19,7 +19,7 @@
             </option>
             <option @if ($status === \App\Enums\News\Status::BLOCKED->value) selected @endif>{{ \App\Enums\News\Status::BLOCKED->value }}
             </option>
-        </select>&nbsp; <button class="btm small filter_btn">Ок</button>
+        </select>&nbsp; <button class="btn small filter_btn">Ок</button>
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
@@ -43,8 +43,9 @@
                         <td>{{ $news->author }}</td>
                         <td>{{ $news->status }}</td>
                         <td>{{ $news->created_at }}</td>
-                        <td><a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp; <a
-                                href="">Delete</a></td>
+                        <td><a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp;
+                            <a href="javascript:;" class="delete" rel="{{ $news->id }}">Delete</a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
@@ -64,6 +65,31 @@
                 let filter = document.getElementById("filter").value;
                 location.href = "?f=" + filter;
             });
+
+            let elements = document.querySelectorAll(".delete")
+            elements.forEach(function(element, key) {
+                element.addEventListener('click', function() {
+                    const id = this.getAttribute('rel');
+                    if (confirm(`Вы подтверждаете удаление записи с ID ${id}?`)) {
+                        send(`/admin/news/${id}`).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        alert("Вы отменили удаление записи")
+                    }
+                });
+            });
         });
+
+        async function send(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+            });
+            let result = await response.json();
+            return result.ok;
+        }
     </script>
 @endpush
