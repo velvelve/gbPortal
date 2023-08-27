@@ -62,3 +62,12 @@ Route::get('/collection', function () {
     $array = [1, 2, 3, 4, 5, 55, 56, 877];
     $collection = collect($array);
 });
+
+Route::get('/session', function () {
+    $all = session()->all();
+    $key = 'test';
+    if (session()->has($key)) {
+        dd($all, session()->get($key));
+    }
+    session()->put($key, 'Some value');
+});
