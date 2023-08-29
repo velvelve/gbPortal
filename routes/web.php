@@ -8,6 +8,7 @@ use App\Http\Controllers\DataUploadController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
+use App\Http\Controllers\Account\IndexController as AccountIndexController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,13 +36,15 @@ Route::get('/news/{id}', static function (string $id) {
 //Hello
 Route::get('/hello', [HelloController::class, 'index'])->name('hello.index');
 
+Route::group(['middleware'=>'auth'], function(){
+    Route::get('/account', AccountIndexController::class)->name('account');
 //Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'is.admin'], static function () {
     Route::get('/', AdminIndexController::class)->name('index');
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
 });
-
+});
 //Categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/{id}', [CategoryController::class, 'show'])
@@ -62,3 +65,7 @@ Route::get('/collection', function () {
     $array = [1, 2, 3, 4, 5, 55, 56, 877];
     $collection = collect($array);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
