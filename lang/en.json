@@ -1,4 +1,14 @@
 {
     "News was saved successfully": "News was saved successfully",
-    "We can not save item, please try again": "We can not save item, please try again"
+    "We can not save item, please try again": "We can not save item, please try again",
+    "Login": "Login",
+    "Email Address": "Email Address",
+    "Password": "Password",
+    "Remember Me": "Remember Me",
+    "Register": "Register",
+    "Name": "Name",
+    "Confirm Password": "Confirm Password",
+    "Forgot Your Password?": "Forgot Your Password?",
+    "User was saved successfully": "User was saved successfully",
+    "Can not change admin to non-admin": "Can not change admin to non-admin"
 }

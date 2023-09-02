@@ -5,10 +5,14 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HelloController;
 use App\Http\Controllers\DataUploadController;
+use App\Http\Controllers\ProfileController as UserProfileController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
+use App\Http\Controllers\Admin\ProfilesController as AdminProfilesController;
 use App\Http\Controllers\Account\IndexController as AccountIndexController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,12 +42,14 @@ Route::get('/hello', [HelloController::class, 'index'])->name('hello.index');
 
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/account', AccountIndexController::class)->name('account');
+    Route::get('/profile', [UserProfileController::class, 'index'])->name('profile.index');
 //Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'is.admin'], static function () {
-    Route::get('/', AdminIndexController::class)->name('index');
-    Route::resource('/categories', AdminCategoryController::class);
-    Route::resource('/news', AdminNewsController::class);
-});
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'is.admin'], static function () {
+        Route::get('/', AdminIndexController::class)->name('index');
+        Route::resource('/categories', AdminCategoryController::class);
+        Route::resource('/news', AdminNewsController::class);
+        Route::resource('/profiles', AdminProfilesController::class);
+    });
 });
 //Categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');

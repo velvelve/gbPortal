@@ -8,5 +8,7 @@
     "Register": "Регистрация",
     "Name": "Имя",
     "Confirm Password": "Подтвердите пароль",
-    "Forgot Your Password?": "Забыли пароль?"
+    "Forgot Your Password?": "Забыли пароль?",
+    "User was saved successfully": "Пользователь сохранён",
+    "Can not change admin to non-admin": "Невозможно изменить статус администратора самому себе"
 }
