@@ -23,8 +23,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="users"></span>
+                <a class="nav-link @if (request()->routeIs('admin.profiles.*')) active @endif"
+                    href="{{ route('admin.profiles.index') }}">
+                    <span data-feather="shopping-cart"></span>
                     Пользователи
                 </a>
             </li>
