@@ -7,3 +7,7 @@
     <a href="{{ route('profile.index') }}">Профиль</a>
 @endif
 
+@if (Auth::user()->avatar !== null)
+    <img src="{{ Auth::user()->avatar }}" style="width: 250px;">
+@endif
+
