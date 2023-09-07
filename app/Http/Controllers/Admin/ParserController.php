@@ -13,7 +13,14 @@ class ParserController extends Controller
      */
     public function __invoke(Request $request, Parser $parser)
     {
+        $source = $request->route('source');
         $url = "https://news.rambler.ru/rss/community/";
+        if($source === 'rambler'){
+            $url = "https://news.rambler.ru/rss/community/";
+        }
+        if($source === 'news'){
+            $url = "https://lenta.ru/rss/news/";
+        }
         $parser->setLink($url)->saveParseData();
     }
 }

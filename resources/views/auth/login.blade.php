@@ -8,6 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <a href="{{ route('social-providers.redirect', ['driver' => 'vkontakte']) }}">Войти через VK</a>
+                <a href="{{ route('social-providers.redirect', ['driver' => 'github']) }}">Войти через Github</a>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
