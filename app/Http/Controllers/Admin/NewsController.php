@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\News\Edit;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
+use App\Services\Contracts\Upload;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -84,9 +85,17 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Edit $request, News $news)
+    public function update(Edit $request, News $news, Upload $upload)
     {
-        $news = $news->fill($request->validated());
+        $validated = $request->validated();
+
+        if($request->hasFile('image'))
+        {
+            $file = $request->file('image');
+            $validated['image'] = $upload->create($file);
+        }
+
+        $news = $news->fill($validated);
         if ($news->save()) {
             return redirect()->route('admin.news.index')->with('success', __('News was saved successfully'));
         }

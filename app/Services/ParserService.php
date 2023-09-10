@@ -1,40 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Services\Contracts\Parser;
-use Orchestra\Parser\Xml\Facade as XmlParser;
+use Illuminate\Support\Facades\Storage;
+use Orchestra\Parser\Xml\Facade;
 
 class ParserService implements Parser
 {
-
     private string $link;
 
     public function setLink(string $link): Parser
     {
         $this->link = $link;
+
         return $this;
     }
 
     public function saveParseData(): void
     {
-        $parsedData = [];
-        if ($this->link === "https://news.rambler.ru/rss/community/"){
-            $parsedData = $this->loadRumbler();
-        }
+        $xml = Facade::load($this->link);
 
-        if ($this->link === "https://lenta.ru/rss/news/"){
-            $parsedData = $this->loadNewsRu();
-        }
-        dd($parsedData);
-    }
-
-    private function loadRumbler(): array
-    {
-        $parser = XmlParser::load($this->link);
-        $parsedData = $parser->parse([
+        $data = $xml->parse([
             'title' => [
-                'uses'=> 'channel.title',
+                'uses' => 'channel.title',
             ],
             'link' => [
                 'uses' => 'channel.link',
@@ -46,29 +37,14 @@ class ParserService implements Parser
                 'uses' => 'channel.image.url',
             ],
             'news' => [
-                'uses' => 'channel.item[title,link,author,description,pubDate,category]',
+                'uses' => 'channel.item[title,link,author,description,pubDate]'
             ],
         ]);
-        return $parsedData;
-    }
 
-    private function loadNewsRu()
-    {
-        $parser = XmlParser::load(url($this->link));
-        $parsedData = $parser->parse([
-            'title' => [
-                'uses'=> 'channel.title',
-            ],
-            'link' => [
-                'uses' => 'channel.link',
-            ],
-            'description' => [
-                'uses' => 'channel.description',
-            ],
-            'news' => [
-                'uses' => 'channel.item[title,link,description,pubDate,category]',
-            ],
-        ]);
-        return $parsedData;
+
+        $explode = explode("/", $this->link);
+        $fileName = end($explode);
+
+        Storage::append('parse/' . $fileName . ".txt", json_encode($data));
     }
 }
