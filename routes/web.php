@@ -7,6 +7,7 @@ use App\Http\Controllers\HelloController;
 use App\Http\Controllers\DataUploadController;
 use App\Http\Controllers\ProfileController as UserProfileController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ResourcesController as AdminResourceController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\ProfilesController as AdminProfilesController;
@@ -50,6 +51,9 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/parser', ParserController::class)->name('parser');
         Route::get('/', AdminIndexController::class)->name('index');
         Route::resource('/categories', AdminCategoryController::class);
+        Route::post('/resources/addnews', [AdminResourceController::class, 'addnews'])
+        ->name('resources.addnews');
+        Route::resource('/resources', AdminResourceController::class);
         Route::resource('/news', AdminNewsController::class);
         Route::resource('/profiles', AdminProfilesController::class);
     });

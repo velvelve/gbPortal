@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Source extends Model
+class Resource extends Model
 {
     use HasFactory;
-
-    protected $table = 'sources';
+    protected $table = 'resources';
+    public $timestamps = false;
 
     protected $fillable = [
+        'id',
+        'url',
         'name',
     ];
 
-    public function news()
-    {
-        return $this->hasMany(News::class, 'source_id');
-    }
 }
