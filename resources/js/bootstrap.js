@@ -10,6 +10,7 @@ import axios from 'axios';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
