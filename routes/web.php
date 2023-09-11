@@ -15,6 +15,7 @@ use App\Http\Controllers\Account\IndexController as AccountIndexController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\SocialProvidersController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,3 +93,13 @@ Route::get('/collection', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Redis
+Route::get('/test-redis', function(){
+    try{
+        Redis::ping();
+        return 'Redis connected';
+    }catch (\Exception $e){
+        return 'Redis connection failed' . $e->getMessage();
+    }
+});

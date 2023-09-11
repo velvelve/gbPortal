@@ -8,6 +8,7 @@ use App\Enums\News\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\News\Create;
 use App\Http\Requests\Admin\News\Edit;
+use App\Jobs\FetchNewsJob;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
