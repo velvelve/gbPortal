@@ -47,7 +47,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/profile', [UserProfileController::class, 'index'])->name('profile.index');
 //Admin
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'is.admin'], static function () {
-        Route::get('/parser', ParserController::class)->name('parser');
+        Route::get('/parser/{source}', ParserController::class)->name('parser');
         Route::get('/', AdminIndexController::class)->name('index');
         Route::resource('/categories', AdminCategoryController::class);
         Route::resource('/news', AdminNewsController::class);

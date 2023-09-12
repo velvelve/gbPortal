@@ -18,6 +18,19 @@ class ParserService implements Parser
 
     public function saveParseData(): void
     {
+        $parsedData = [];
+        if ($this->link === "https://news.rambler.ru/rss/community/"){
+            $parsedData = $this->loadRumbler();
+        }
+
+        if ($this->link === "https://lenta.ru/rss/news/"){
+            $parsedData = $this->loadNewsRu();
+        }
+        dd($parsedData);
+    }
+
+    private function loadRumbler(): array
+    {
         $parser = XmlParser::load($this->link);
         $parsedData = $parser->parse([
             'title' => [
@@ -36,6 +49,26 @@ class ParserService implements Parser
                 'uses' => 'channel.item[title,link,author,description,pubDate,category]',
             ],
         ]);
-        dd($parsedData);
+        return $parsedData;
+    }
+
+    private function loadNewsRu()
+    {
+        $parser = XmlParser::load(url($this->link));
+        $parsedData = $parser->parse([
+            'title' => [
+                'uses'=> 'channel.title',
+            ],
+            'link' => [
+                'uses' => 'channel.link',
+            ],
+            'description' => [
+                'uses' => 'channel.description',
+            ],
+            'news' => [
+                'uses' => 'channel.item[title,link,description,pubDate,category]',
+            ],
+        ]);
+        return $parsedData;
     }
 }
