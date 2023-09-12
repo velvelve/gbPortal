@@ -14,6 +14,8 @@ class News extends Model
 
     protected $table = 'news';
 
+    public static int $RSS_SOURCE_ID = 1;
+
     protected $fillable = [
         'category_id',
         'title',

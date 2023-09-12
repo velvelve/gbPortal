@@ -50,6 +50,7 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
     </script>
+    <script src="{{ asset('assets/vendor/ckeditor5-build-classic/ckeditor.js')}}"></script>
     <script src="{{ asset('assets/dashboard.js') }}"></script>
     @stack('js')
 </body>

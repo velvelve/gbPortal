@@ -13,7 +13,7 @@
                 <x-alert :message="$error" type="danger"></x-alert>
             @endforeach
         @endif
-        <form method="POST" action="{{ route('admin.news.update', ['news' => $news]) }}">
+        <form method="POST" action="{{ route('admin.news.update', ['news' => $news]) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -50,6 +50,7 @@
             </div>
             <div class="form-group">
                 <label for="image">Изображение</label>
+                <img src="{{ Storage::disk('public')->url($news->image) }}" style="width: 100px;"/>
                 <input type="file" class="form-control" name="image" id="image">
             </div>
             <div class="form-group">
@@ -74,3 +75,13 @@
         </form>
     </div>
 @endsection
+
+@push('js')
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+@endpush
